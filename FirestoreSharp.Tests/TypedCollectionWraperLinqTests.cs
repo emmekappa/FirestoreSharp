@@ -1,4 +1,6 @@
+using System;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Xunit;
@@ -16,7 +18,6 @@ namespace FirestoreSharp.Tests
             await Collection.AddAsync(new SampleData {String1 = "asd", String2WithCustomName = "mah", Int1 = 3});
             await Collection.AddAsync(new SampleData {String1 = "xxx1", String2WithCustomName = "111", Int1 = 1});
             await Collection.AddAsync(new SampleData {String1 = "xxx2", String2WithCustomName = "222", Int1 = 1});
-            //_collection.WhereEqualTo(x => x.String1, "asd");
             
             var query = Collection.Where(x => x.String1 == "asd");
 
@@ -33,7 +34,6 @@ namespace FirestoreSharp.Tests
             await Collection.AddAsync(new SampleData {String1 = "asd", String2WithCustomName = "mah", Int2WithCustomName  = 3});
             await Collection.AddAsync(new SampleData {String1 = "xxx1", String2WithCustomName = "111", Int2WithCustomName  = 1});
             await Collection.AddAsync(new SampleData {String1 = "xxx2", String2WithCustomName = "222", Int2WithCustomName  = 1});
-            //_collection.WhereEqualTo(x => x.String1, "asd");
             
             var query = Collection.Where(x => x.String2WithCustomName == "111");
 
@@ -50,7 +50,6 @@ namespace FirestoreSharp.Tests
             await Collection.AddAsync(new SampleData {String1 = "asd", String2WithCustomName = "mah", Int2WithCustomName  = 3});
             await Collection.AddAsync(new SampleData {String1 = "xxx1", String2WithCustomName = "111", Int2WithCustomName  = 1});
             await Collection.AddAsync(new SampleData {String1 = "xxx2", String2WithCustomName = "222", Int2WithCustomName  = 1});
-            //_collection.WhereEqualTo(x => x.String1, "asd");
             
             var query = Collection.Where(x => x.String2WithCustomName.Equals("111"));
 
@@ -67,7 +66,6 @@ namespace FirestoreSharp.Tests
             await Collection.AddAsync(new SampleData { Int2WithCustomName  = 2});
             await Collection.AddAsync(new SampleData { Int2WithCustomName  = 3});
             await Collection.AddAsync(new SampleData {Int2WithCustomName  = 4});
-            //_collection.WhereEqualTo(x => x.String1, "asd");
             
             var query = Collection.Where(x => x.Int2WithCustomName > 2);
 
@@ -84,7 +82,6 @@ namespace FirestoreSharp.Tests
             await Collection.AddAsync(new SampleData { Int2WithCustomName  = 2});
             await Collection.AddAsync(new SampleData { Int2WithCustomName  = 3});
             await Collection.AddAsync(new SampleData {Int2WithCustomName  = 4});
-            //_collection.WhereEqualTo(x => x.String1, "asd");
             
             var query = Collection.Where(x => x.Int2WithCustomName >= 2);
 
@@ -101,7 +98,6 @@ namespace FirestoreSharp.Tests
             await Collection.AddAsync(new SampleData { Int2WithCustomName  = 2});
             await Collection.AddAsync(new SampleData { Int2WithCustomName  = 3});
             await Collection.AddAsync(new SampleData {Int2WithCustomName  = 4});
-            //_collection.WhereEqualTo(x => x.String1, "asd");
             
             var query = Collection.Where(x => x.Int2WithCustomName < 2);
 
@@ -118,7 +114,6 @@ namespace FirestoreSharp.Tests
             await Collection.AddAsync(new SampleData { Int2WithCustomName  = 2});
             await Collection.AddAsync(new SampleData { Int2WithCustomName  = 3});
             await Collection.AddAsync(new SampleData {Int2WithCustomName  = 4});
-            //_collection.WhereEqualTo(x => x.String1, "asd");
             
             var query = Collection.Where(x => x.Int2WithCustomName <= 2);
 
@@ -135,8 +130,6 @@ namespace FirestoreSharp.Tests
             await Collection.AddAsync(new SampleData { IntArray1 = new[] { 11, 22, 33}});
             await Collection.AddAsync(new SampleData { IntArray1 = new[] { 44, 55, 66, 1, 2, 3}});
             await Collection.AddAsync(new SampleData { IntArray1 = new[] { 32, 31, 30, 1, 2, 3}});
-            
-            //_collection.WhereEqualTo(x => x.String1, "asd");
             
             var query = Collection.Where(x => x.IntArray1.Contains(3));
 
@@ -155,8 +148,6 @@ namespace FirestoreSharp.Tests
             await Collection.AddAsync(new SampleData { String2WithCustomName = "antani", IntArray1 = new[] { 44, 55, 66, 1, 2, 3}});
             await Collection.AddAsync(new SampleData { String2WithCustomName = "none", IntArray1 = new[] { 32, 31, 30, 1, 2, 3}});
             
-            //_collection.WhereEqualTo(x => x.String1, "asd");
-            
             var query = Collection.Where(x => x.IntArray1.Contains(1) && x.String2WithCustomName.Equals("antani"));
 
             var result = await query.GetSnapshotAsync();
@@ -172,8 +163,6 @@ namespace FirestoreSharp.Tests
             await Collection.AddAsync(new SampleData { String2WithCustomName = "none", IntArray1 = new[] { 11, 22, 33}});
             await Collection.AddAsync(new SampleData { String2WithCustomName = "antani", IntArray1 = new[] { 44, 55, 66, 1, 2, 3}});
             await Collection.AddAsync(new SampleData { String2WithCustomName = "none", IntArray1 = new[] { 32, 31, 30, 1, 2, 3}});
-            
-            //_collection.WhereEqualTo(x => x.String1, "asd");
             
             var query = Collection.Where(x => x.IntArray1.Contains(1) && x.String2WithCustomName == "antani");
             
@@ -191,14 +180,26 @@ namespace FirestoreSharp.Tests
             await Collection.AddAsync(new SampleData { String2WithCustomName = "antani", Int1 = 3});
             await Collection.AddAsync(new SampleData { String2WithCustomName = "no", Int1 = 4});
             
-            //_collection.WhereEqualTo(x => x.String1, "asd");
-
             var query = Collection.Where(x => x.String2WithCustomName == "antani")
                 .OrderBy(x => x.Int1);
 
             var result = await query.GetSnapshotAsync();
             
             result.Should().HaveCount(2);
+        }
+        
+        [Fact]
+        public async Task Or_should_throw_NotSupportedException()
+        {
+            await ClearCollection();
+            
+            await Collection.AddAsync(new SampleData {String1 = "asd", String2WithCustomName = "boh", Int1 = 2});
+            await Collection.AddAsync(new SampleData {String1 = "asd", String2WithCustomName = "mah", Int1 = 3});
+            await Collection.AddAsync(new SampleData {String1 = "xxx1", String2WithCustomName = "111", Int1 = 1});
+            await Collection.AddAsync(new SampleData {String1 = "xxx2", String2WithCustomName = "222", Int1 = 1});
+
+            Assert.Throws<NotSupportedException>(() => Collection.Where(x => x.String1 == "asd" || x.String2WithCustomName == "boh"));
+
         }
 
     }
