@@ -1,9 +1,9 @@
-using System.Threading;
-using System.Threading.Tasks;
-using Google.Cloud.Firestore;
-
 namespace FirestoreSharp
 {
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Google.Cloud.Firestore;
+
     public static class TransactionExtensions
     {
         public static async Task<TypedDocumentSnapshot<T>> GetSnapshotAsync<T>(this Transaction transaction,

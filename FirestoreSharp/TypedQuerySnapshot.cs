@@ -1,11 +1,11 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using Google.Cloud.Firestore;
-
 namespace FirestoreSharp
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Google.Cloud.Firestore;
+
     public class TypedQuerySnapshot<T> : IReadOnlyList<TypedDocumentSnapshot<T>>, IEquatable<TypedQuerySnapshot<T>>
     {
         public TypedQuerySnapshot(QuerySnapshot querySnapshot)
@@ -17,6 +17,11 @@ namespace FirestoreSharp
 
         public IEnumerable<TypedDocumentSnapshot<T>> Documents =>
             QuerySnapshot.Documents.Select(x => new TypedDocumentSnapshot<T>(x));
+
+        public bool Equals(TypedQuerySnapshot<T> other)
+        {
+            return QuerySnapshot.Equals(other.QuerySnapshot);
+        }
 
         public IEnumerator<TypedDocumentSnapshot<T>> GetEnumerator()
         {
@@ -30,9 +35,12 @@ namespace FirestoreSharp
 
         public int Count => QuerySnapshot.Documents.Count;
 
-        public bool Equals(TypedQuerySnapshot<T> other) => QuerySnapshot.Equals(other.QuerySnapshot);
+        public TypedDocumentSnapshot<T> this[int index] => new TypedDocumentSnapshot<T>(QuerySnapshot[index]);
 
-        public override bool Equals(object obj) => Equals(obj as TypedQuerySnapshot<T>);
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as TypedQuerySnapshot<T>);
+        }
 
         public override int GetHashCode()
         {
@@ -41,7 +49,5 @@ namespace FirestoreSharp
                 return ((QuerySnapshot != null ? QuerySnapshot.GetHashCode() : 0) * 397) ^ Count;
             }
         }
-
-        public TypedDocumentSnapshot<T> this[int index] => new TypedDocumentSnapshot<T>(QuerySnapshot[index]);
     }
 }

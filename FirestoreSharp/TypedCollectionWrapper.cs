@@ -1,11 +1,11 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-using Google.Cloud.Firestore;
-
 namespace FirestoreSharp
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Linq.Expressions;
+    using System.Threading.Tasks;
+    using Google.Cloud.Firestore;
+
     public class TypedCollectionWrapper<TEntity> : TypedQueryWrapper<TEntity>
     {
         public TypedCollectionWrapper(CollectionReference collectionReference) : base(collectionReference)
@@ -15,7 +15,7 @@ namespace FirestoreSharp
 
         public CollectionReference CollectionReference { get; }
 
-     
+
         public async Task<TypedDocumentReference<TEntity>> AddAsync(TEntity entity)
         {
             return new TypedDocumentReference<TEntity>(await CollectionReference.AddAsync(entity));
@@ -29,7 +29,7 @@ namespace FirestoreSharp
         public static object Evaluate(Expression e)
         {
             if (e.NodeType == ExpressionType.Constant)
-                return ((ConstantExpression)e).Value;
+                return ((ConstantExpression) e).Value;
             return Expression.Lambda(e).Compile().DynamicInvoke();
         }
 

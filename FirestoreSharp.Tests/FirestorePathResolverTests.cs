@@ -1,9 +1,9 @@
-using System;
-using FluentAssertions;
-using Xunit;
-
 namespace FirestoreSharp.Tests
 {
+    using System;
+    using FluentAssertions;
+    using Xunit;
+
     public class FirestorePathResolverTests
     {
         [Fact]

@@ -1,19 +1,19 @@
-using System;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-using Google.Cloud.Firestore;
-
 namespace FirestoreSharp
 {
+    using System;
+    using System.Linq.Expressions;
+    using System.Threading.Tasks;
+    using Google.Cloud.Firestore;
+
     public class TypedQueryWrapper<TEntity>
     {
-        public Query Query { get; }
-
         protected TypedQueryWrapper(Query query)
         {
             Query = query;
         }
-        
+
+        public Query Query { get; }
+
         public Query WhereEqualTo<TMember>(Expression<Func<TEntity, TMember>> selector, TMember value)
         {
             var propertyName = FieldPathResolver<TEntity>.Resolve(selector);
@@ -97,7 +97,7 @@ namespace FirestoreSharp
 //                    throw new NotImplementedException();
 //            }
         }
-        
+
         public async Task<TypedQuerySnapshot<TEntity>> GetSnapshotAsync()
         {
             return new TypedQuerySnapshot<TEntity>(await Query.GetSnapshotAsync());
@@ -107,10 +107,11 @@ namespace FirestoreSharp
         {
             return new TypedQueryWrapper<TEntity>(Query.OrderBy(FieldPathResolver<TEntity>.Resolve(selector)));
         }
-        
+
         public TypedQueryWrapper<TEntity> OrderByDescending<TMember>(Expression<Func<TEntity, TMember>> selector)
         {
-            return new TypedQueryWrapper<TEntity>(Query.OrderByDescending(FieldPathResolver<TEntity>.Resolve(selector)));
+            return new TypedQueryWrapper<TEntity>(
+                Query.OrderByDescending(FieldPathResolver<TEntity>.Resolve(selector)));
         }
     }
 }

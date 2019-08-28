@@ -1,8 +1,8 @@
-using System;
-using Google.Cloud.Firestore;
-
 namespace FirestoreSharp.Tests
 {
+    using System;
+    using Google.Cloud.Firestore;
+
     [FirestoreData]
     public class SampleData
     {
@@ -26,8 +26,7 @@ namespace FirestoreSharp.Tests
         [FirestoreProperty("custom_nested_path")]
         public NestedData NestedData2CustomName { get; set; }
 
-        [FirestoreProperty]
-        public int[] IntArray1 { get; set; }
+        [FirestoreProperty] public int[] IntArray1 { get; set; }
     }
 
     [FirestoreData]

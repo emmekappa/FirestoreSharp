@@ -1,8 +1,8 @@
-using System;
-using System.Linq.Expressions;
-
 namespace FirestoreSharp.Tests
 {
+    using System;
+    using System.Linq.Expressions;
+
     public static class SelectorExpressionExtensions
     {
         public static TMember GetValue<TType, TMember>(this Expression<Func<TType, TMember>> selector,

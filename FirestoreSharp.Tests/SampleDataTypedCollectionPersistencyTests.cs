@@ -1,11 +1,11 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Xunit;
-
 namespace FirestoreSharp.Tests
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using Xunit;
+
     public class SampleDataTypedCollectionPersistencyTests : FirestoreTypedCollectionTestBase<SampleData>
     {
         public SampleData createSampleData()

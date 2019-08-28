@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Reflection;
-using Google.Cloud.Firestore;
-
 namespace FirestoreSharp
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq.Expressions;
+    using System.Reflection;
+    using Google.Cloud.Firestore;
+
     public static class FieldPathResolver
     {
         private static string GetPropertyName(MemberExpression body)
@@ -18,7 +18,7 @@ namespace FirestoreSharp
                 : firestorePropertyAttribute.Name;
             return propertyName;
         }
-        
+
         public static string ResolveExpression(MemberExpression me)
         {
             var properties = new List<string>();
@@ -32,6 +32,7 @@ namespace FirestoreSharp
             return string.Join(".", properties);
         }
     }
+
     public static class FieldPathResolver<TEntity>
     {
         public static string Resolve<TMember>(Expression<Func<TEntity, TMember>> selector)

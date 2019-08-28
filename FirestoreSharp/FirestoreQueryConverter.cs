@@ -1,24 +1,23 @@
-using System;
-using System.Linq.Expressions;
-using Google.Cloud.Firestore;
-
 namespace FirestoreSharp
 {
-    public class FirestoreQueryConverter : ExpressionVisitor {
-        public Query Query { get; private set; }
+    using System;
+    using System.Linq.Expressions;
+    using Google.Cloud.Firestore;
 
+    public class FirestoreQueryConverter : ExpressionVisitor
+    {
         public FirestoreQueryConverter(Query query)
         {
             Query = query;
         }
 
+        public Query Query { get; private set; }
+
         protected override Expression VisitBinary(BinaryExpression node)
         {
             if (node.NodeType == ExpressionType.OrElse)
-            {
                 throw new NotSupportedException("OR are not supported in firebase");
-            }
-            
+
             if (node.NodeType == ExpressionType.AndAlso)
             {
                 //_query.WhereArrayContains()
@@ -52,7 +51,7 @@ namespace FirestoreSharp
 
             return base.VisitBinary(node);
         }
-        
+
         protected override Expression VisitMethodCall(MethodCallExpression node)
         {
             switch (node.Method.Name)

@@ -1,7 +1,7 @@
-using Google.Cloud.Firestore;
-
 namespace FirestoreSharp
 {
+    using Google.Cloud.Firestore;
+
     public static class DatabaseExtensions
     {
         public static TypedCollectionWrapper<T> Collection<T>(this FirestoreDb db, string path = null)

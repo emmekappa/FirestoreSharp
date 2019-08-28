@@ -1,9 +1,9 @@
-using System;
-using System.Linq.Expressions;
-using Google.Cloud.Firestore;
-
 namespace FirestoreSharp
 {
+    using System;
+    using System.Linq.Expressions;
+    using Google.Cloud.Firestore;
+
     public class TypedUpdate<T>
     {
         private readonly Transaction _transaction;
