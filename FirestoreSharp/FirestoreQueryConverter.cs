@@ -46,7 +46,7 @@ namespace FirestoreSharp
                         Query = Query.WhereLessThanOrEqualTo(propertyName, valueExpression);
                         break;
                     default:
-                        throw new NotImplementedException($"Operator {node.NodeType} not supported");
+                        throw new NotSupportedException($"Operator {node.NodeType} not supported");
                 }
             }
 
