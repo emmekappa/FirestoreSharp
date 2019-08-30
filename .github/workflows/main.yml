@@ -33,5 +33,5 @@ jobs:
     - name: Pack NuGet package
       run: dotnet pack FirestoreSharp
     - name: Publish NuGet package
-      run: dotnet nuget push -s "https://nuget.pkg.github.com/emmekappa/index.json" -k emmekappa FirestoreSharp
+      run: dotnet nuget push -s "https://nuget.pkg.github.com/emmekappa/index.json" -k emmekappa **/*.nupkg
       
