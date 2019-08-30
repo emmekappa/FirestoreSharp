@@ -20,7 +20,7 @@ jobs:
       with:
         dotnet-version: 2.2.401
     - name: Setup Nuget.exe
-      run: apt install nuget
+      run: sudo apt-get install nuget
     - name: Build
       run: dotnet build --configuration Release
     - name: Test
