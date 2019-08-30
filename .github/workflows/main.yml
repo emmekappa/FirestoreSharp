@@ -32,5 +32,5 @@ jobs:
     - name: Pack NuGet package
       run: dotnet pack FirestoreSharp
     - name: Publish NuGet package
-      run: dotnet publish -Source "GitHub" FirestoreSharp
+      run: dotnet nuget push -s "GitHub" FirestoreSharp
       
