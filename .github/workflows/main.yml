@@ -28,7 +28,9 @@ jobs:
       env:
         FIRESTORE_EMULATOR_HOST: localhost:${{ job.services.firestore-emulator.ports[8080] }}
     - name: Adding GitHub Package Registry as NuGet Sources
-      run: nuget source Add -ConfigFile ./nuget.config -Name "GitHub" -Source "https://nuget.pkg.github.com/emmekappa/index.json" -UserName emmekappa -Password ${{ secrets.GITHUB_TOKEN }}    
+      run: 
+      - touch ./nuget.config
+      - nuget source Add -ConfigFile ./nuget.config -Name "GitHub" -Source "https://nuget.pkg.github.com/emmekappa/index.json" -UserName emmekappa -Password ${{ secrets.GITHUB_TOKEN }}    
     - name: Pack NuGet package
       run: dotnet pack FirestoreSharp
     - name: Publish NuGet package
