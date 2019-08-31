@@ -15,7 +15,6 @@ namespace FirestoreSharp.Tests
             var matches = Regex.Match(firestoreHost, "(?<host>.*):(?<port>\\d+)");
             var host = matches.Groups["host"].Value;
             var port = int.Parse(matches.Groups["port"].Value);
-
             var firestoreSettings = new FirestoreSettings
             {
                 CallSettings = CallSettings.FromHeaderMutation(x => x.Add("Authorization", "Bearer owner"))
