@@ -1,7 +1,7 @@
 
 name: CI
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   build:
@@ -19,20 +19,24 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 2.2.401
-    - name: Setup Nuget.exe
-      run: sudo apt-get install nuget
     - name: Build
       run: dotnet build --configuration Release
     - name: Test
       run: dotnet test --logger:"console;verbosity=detailed"
       env:
         FIRESTORE_EMULATOR_HOST: localhost:${{ job.services.firestore-emulator.ports[8080] }}
+    - name: Setup Nuget.exe
+      if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+      run: sudo apt-get install nuget
     - name: Adding GitHub Package Registry as NuGet Sources
+      if: github.event_name == 'push' && github.ref == 'refs/heads/master'
       run: nuget source Add -Name github -Source "https://nuget.pkg.github.com/emmekappa/index.json" -UserName emmekappa -Password ${{ secrets.GITHUB_NUGET_TOKEN }}
 #      #-ConfigFile ./nuget.config
     - name: Pack NuGet package
+      if: github.event_name == 'push' && github.ref == 'refs/heads/master'
       run: dotnet pack FirestoreSharp
     - name: Publish NuGet package
+      if: github.event_name == 'push' && github.ref == 'refs/heads/master'
       #run: dotnet nuget push -s "https://nuget.pkg.github.com/emmekappa/index.json" -k ${{ secrets.GITHUB_NUGET_TOKEN }} **/*.nupkg
       run: nuget push **/*.nupkg -Source github -NonInteractive -SkipDuplicate -NoSymbols
       
