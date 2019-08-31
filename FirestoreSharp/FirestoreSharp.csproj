@@ -6,6 +6,7 @@
         <Authors>Michele Cantelli</Authors>
         <PackageProjectUrl>https://github.com/emmekappa/FirestoreSharp</PackageProjectUrl>
         <RepositoryUrl>https://github.com/emmekappa/FirestoreSharp</RepositoryUrl>
+        <PackageLicenseUrl>https://www.apache.org/licenses/LICENSE-2.0</PackageLicenseUrl>
     </PropertyGroup>
 
     <ItemGroup>
