@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp2.2</TargetFramework>
-        <PackageVersion>0.0.1</PackageVersion>
+        <PackageVersion>0.0.2</PackageVersion>
         <Authors>Michele Cantelli</Authors>
         <PackageProjectUrl>https://github.com/emmekappa/FirestoreSharp</PackageProjectUrl>
         <RepositoryUrl>https://github.com/emmekappa/FirestoreSharp</RepositoryUrl>
